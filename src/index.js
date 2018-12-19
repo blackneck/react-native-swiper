@@ -570,16 +570,16 @@ export default class extends Component {
   }
 
   renderNextButton = () => {
-    let button = null
-
-    if (this.props.loop ||
-      this.state.index !== this.state.total - 1) {
-      button = this.props.nextButton || <Text style={styles.buttonText}>›</Text>
-    }
+    const button = this.props.nextButton || <Text style={styles.buttonText}>›</Text>
 
     return (
       <TouchableOpacity
-        onPress={() => button !== null && this.scrollBy(1)}
+        onPress={() => {
+          if(this.state.index === this.state.total - 1)
+            this.props.lastNext()
+          else
+            button !== null && this.scrollBy(1) 
+        }}
         disabled={this.props.disableNextButton}
       >
         <View>
